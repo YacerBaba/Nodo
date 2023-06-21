@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:tag="addTodoLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <CheckBox
+        android:id="@+id/addTodoList_check1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/addTodoList_task1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:paddingStart="5dp"
+        android:hint="Type something todo"
+        android:fontFamily="@font/sfprodisplay_regular"
+        android:textSize="16sp"
+        />
+</LinearLayout>
