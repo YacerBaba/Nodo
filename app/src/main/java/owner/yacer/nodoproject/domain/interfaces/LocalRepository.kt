@@ -15,7 +15,7 @@ interface LocalRepository {
     fun updateNote(note: Note)
 
     // TodoList Part
-    fun getTodoList():List<TodoListWithTasks>
+    fun getTodoLists():List<TodoListWithTasks>
     fun addTodoList(todoList: TodoList):Long
     fun updateTodoList(todoList: TodoList)
     fun deleteTodoList(todoList: TodoList)

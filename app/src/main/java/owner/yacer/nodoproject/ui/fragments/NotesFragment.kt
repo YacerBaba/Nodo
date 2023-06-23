@@ -2,26 +2,27 @@ package owner.yacer.nodoproject.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.fragment_notes.*
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.domain.di.DaggerMyComponent
 import owner.yacer.nodoproject.ui.activities.CreateNewNoteActivity
 import owner.yacer.nodoproject.ui.adapters.NoteAdapter
 import owner.yacer.nodoproject.ui.viewmodels.NoteFragmentViewModel
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
     lateinit var notesAdapter: NoteAdapter
+
     lateinit var noteViewModel: NoteFragmentViewModel
     var notesList = listOf<Note>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        noteViewModel = ViewModelProvider(this)[NoteFragmentViewModel::class.java]
+        val component = DaggerMyComponent.create()
+        noteViewModel = component.getNoteViewModel()
         noteViewModel.initContext(requireContext())
         setupRecyclerView()
         noteViewModel.getNotesSortedByTime()
@@ -39,7 +40,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
             }
         }
 
-        notes_searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+        notes_searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
@@ -47,8 +48,9 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
             override fun onQueryTextChange(newText: String?): Boolean {
                 var searchResultList = mutableListOf<Note>()
                 notesList.forEach { note ->
-                    if(note.title.lowercase().contains(newText!!.lowercase())
-                        || note.body.lowercase().contains(newText.lowercase())){
+                    if (note.title.lowercase().contains(newText!!.lowercase())
+                        || note.body.lowercase().contains(newText.lowercase())
+                    ) {
                         searchResultList.add(note)
                     }
                 }

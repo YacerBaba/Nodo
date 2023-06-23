@@ -11,7 +11,6 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.add_todolist_layout.*
@@ -23,6 +22,7 @@ import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.models.Task
 import owner.yacer.nodoproject.data.models.TodoList
 import owner.yacer.nodoproject.data.models.TodoListWithTasks
+import owner.yacer.nodoproject.domain.di.DaggerMyComponent
 import owner.yacer.nodoproject.ui.adapters.TodoListAdapter
 import owner.yacer.nodoproject.ui.viewmodels.TodoFragmentViewModel
 import java.util.Date
@@ -38,7 +38,8 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
 
         super.onViewCreated(view, savedInstanceState)
         addTasksDialogBox = Dialog(requireContext())
-        todoViewModel = ViewModelProvider(this)[TodoFragmentViewModel::class.java]
+        val component = DaggerMyComponent.create()
+        todoViewModel = component.getTodoViewModel()
         todoViewModel.initDatabase(requireContext())
         setupRecyclerView()
         lifecycleScope.async {

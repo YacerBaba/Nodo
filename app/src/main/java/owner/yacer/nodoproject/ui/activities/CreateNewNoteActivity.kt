@@ -2,22 +2,25 @@ package owner.yacer.nodoproject.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_create_new_note.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.domain.di.DaggerMyComponent
 import owner.yacer.nodoproject.ui.viewmodels.CreateNewNoteViewModel
 import java.util.Date
 
 class CreateNewNoteActivity : AppCompatActivity() {
+
     lateinit var newNoteViewModel: CreateNewNoteViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_note)
-        newNoteViewModel = ViewModelProvider(this)[CreateNewNoteViewModel::class.java]
+
+        val component = DaggerMyComponent.create()
+        newNoteViewModel = component.getCreateNoteViewModel()
 
         newNote_btn_back.setOnClickListener {
             finish()

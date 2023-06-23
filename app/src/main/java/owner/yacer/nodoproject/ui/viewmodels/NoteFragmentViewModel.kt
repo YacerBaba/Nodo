@@ -8,19 +8,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import owner.yacer.nodoproject.data.models.Note
-import owner.yacer.nodoproject.data.repository.LocalRepositoryImpl
+import owner.yacer.nodoproject.domain.useCases.NotesUseCases.GetNotesUseCase
+import owner.yacer.nodoproject.domain.useCases.InitDatabaseUseCase
+import javax.inject.Inject
 
-class NoteFragmentViewModel : ViewModel(){
+class NoteFragmentViewModel @Inject constructor(
+    private val getNotesUseCase: GetNotesUseCase,
+    private val initDatabaseUseCase: InitDatabaseUseCase
+    ) : ViewModel(){
     // declare observable data types
     val mutableNotesList = MutableLiveData<List<Note>>()
 
     fun initContext(context: Context){
-        LocalRepositoryImpl.initDatabase(context)
+        initDatabaseUseCase.execute(context)
     }
 
     fun getNotesSortedByTime(){
         CoroutineScope(Dispatchers.IO).launch {
-            val notesListFromRepo = LocalRepositoryImpl.getNotesSortedByTime()
+            val notesListFromRepo = getNotesUseCase.execute()
             withContext(Dispatchers.Main){
                 mutableNotesList.value = notesListFromRepo
             }

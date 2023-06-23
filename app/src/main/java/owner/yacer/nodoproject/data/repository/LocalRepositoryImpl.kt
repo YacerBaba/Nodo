@@ -37,7 +37,7 @@ object LocalRepositoryImpl : LocalRepository {
     }
 
     // TodoList Part
-    override fun getTodoList():List<TodoListWithTasks> = todoListDao.getTodoListWithTasks()
+    override fun getTodoLists():List<TodoListWithTasks> = todoListDao.getTodoListWithTasks()
     override fun addTodoList(todoList: TodoList):Long{
         return todoListDao.addTodoList(todoList)
     }

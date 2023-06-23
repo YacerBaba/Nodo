@@ -1,5 +1,11 @@
 package owner.yacer.nodoproject.domain.useCases
 
-interface InitDatabaseUseCase {
-    fun execute()
+import android.content.Context
+import owner.yacer.nodoproject.domain.interfaces.LocalRepository
+import javax.inject.Inject
+
+class InitDatabaseUseCase @Inject constructor(private val localRepository: LocalRepository) {
+    fun execute(context:Context) {
+        localRepository.initDatabase(context)
+    }
 }

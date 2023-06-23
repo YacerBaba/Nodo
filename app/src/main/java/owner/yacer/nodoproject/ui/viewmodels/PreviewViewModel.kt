@@ -5,17 +5,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import owner.yacer.nodoproject.data.models.Note
-import owner.yacer.nodoproject.data.repository.LocalRepositoryImpl
+import owner.yacer.nodoproject.domain.useCases.NotesUseCases.DeleteNoteUseCase
+import owner.yacer.nodoproject.domain.useCases.NotesUseCases.UpdateNoteUseCase
+import javax.inject.Inject
 
-class PreviewViewModel : ViewModel() {
+class PreviewViewModel @Inject constructor(
+    private val updateNoteUseCase: UpdateNoteUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase
+    ) : ViewModel() {
 
     fun updateNote(note: Note) {
-        LocalRepositoryImpl.updateNote(note)
+        updateNoteUseCase.execute(note)
     }
 
     fun deleteNote(note: Note) {
         CoroutineScope(Dispatchers.IO).launch {
-            LocalRepositoryImpl.deleteNote(note)
+            deleteNoteUseCase.execute(note)
         }
     }
 }

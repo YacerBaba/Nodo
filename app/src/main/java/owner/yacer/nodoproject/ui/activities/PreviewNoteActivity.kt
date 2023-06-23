@@ -1,15 +1,9 @@
 package owner.yacer.nodoproject.ui.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Menu
-import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.ShareActionProvider
-import androidx.core.view.MenuItemCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_preview_note.*
@@ -20,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.domain.di.DaggerMyComponent
 import owner.yacer.nodoproject.ui.viewmodels.PreviewViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +27,8 @@ class PreviewNoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview_note)
-        previewViewModel = ViewModelProvider(this)[PreviewViewModel::class.java]
+        val component = DaggerMyComponent.create()
+        previewViewModel = component.getPreviewViewModel()
         getDataFromIntent()
         setNoteToViews()
         initBottomColors()
