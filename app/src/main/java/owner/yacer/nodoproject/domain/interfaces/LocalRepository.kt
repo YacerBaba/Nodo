@@ -1,19 +1,17 @@
 package owner.yacer.nodoproject.domain.interfaces
 
 import android.content.Context
-import owner.yacer.nodoproject.data.models.Note
-import owner.yacer.nodoproject.data.models.Task
-import owner.yacer.nodoproject.data.models.TodoList
-import owner.yacer.nodoproject.data.models.TodoListWithTasks
+import owner.yacer.nodoproject.data.models.*
 
 interface LocalRepository {
     fun initDatabase(context: Context)
-    fun getNotesSortedByTime():List<Note>
+    fun getNotesSortedByTime():List<NoteWithNoteImages>
 
     fun addNote(note: Note):Long
     fun deleteNote(note: Note)
     fun updateNote(note: Note)
-
+    fun addNoteImages(noteImage: NoteImage)
+    fun getNoteImages(id:Int):List<NoteImage>
     // TodoList Part
     fun getTodoLists():List<TodoListWithTasks>
     fun addTodoList(todoList: TodoList):Long

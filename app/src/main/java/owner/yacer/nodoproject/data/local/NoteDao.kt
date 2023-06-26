@@ -7,11 +7,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.data.models.NoteWithNoteImages
 
 @Dao
 interface NoteDao {
     @Query("SELECT * from Note order by time DESC")
-    fun getNotesSortedByTime():List<Note>
+    fun getNotesSortedByTime():List<NoteWithNoteImages>
 
     @Insert
     fun addNote(note:Note):Long

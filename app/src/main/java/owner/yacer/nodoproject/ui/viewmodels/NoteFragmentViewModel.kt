@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.data.models.NoteWithNoteImages
 import owner.yacer.nodoproject.domain.useCases.NotesUseCases.GetNotesUseCase
 import owner.yacer.nodoproject.domain.useCases.InitDatabaseUseCase
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class NoteFragmentViewModel @Inject constructor(
     private val initDatabaseUseCase: InitDatabaseUseCase
     ) : ViewModel(){
     // declare observable data types
-    val mutableNotesList = MutableLiveData<List<Note>>()
+    val mutableNotesList = MutableLiveData<List<NoteWithNoteImages>>()
 
     fun initContext(context: Context){
         initDatabaseUseCase.execute(context)

@@ -2,14 +2,8 @@ package owner.yacer.nodoproject.data.repository
 
 import android.content.Context
 import androidx.room.Room
-import owner.yacer.nodoproject.data.local.Database
-import owner.yacer.nodoproject.data.local.NoteDao
-import owner.yacer.nodoproject.data.local.TaskDao
-import owner.yacer.nodoproject.data.local.TodoListDao
-import owner.yacer.nodoproject.data.models.Note
-import owner.yacer.nodoproject.data.models.Task
-import owner.yacer.nodoproject.data.models.TodoList
-import owner.yacer.nodoproject.data.models.TodoListWithTasks
+import owner.yacer.nodoproject.data.local.*
+import owner.yacer.nodoproject.data.models.*
 import owner.yacer.nodoproject.domain.interfaces.LocalRepository
 
 object LocalRepositoryImpl : LocalRepository {
@@ -17,14 +11,15 @@ object LocalRepositoryImpl : LocalRepository {
     lateinit var noteDao: NoteDao
     lateinit var todoListDao:TodoListDao
     lateinit var taskDao:TaskDao
-
+    lateinit var noteImagesDao:NoteImageDao
     override fun initDatabase(context:Context){
         db = Room.databaseBuilder(context,Database::class.java,"nodo_db").build()
         noteDao = db.getNoteDao()
         todoListDao = db.getTodoListDao()
         taskDao = db.getTaskDao()
+        noteImagesDao = db.getNoteImagesDao()
     }
-    override fun getNotesSortedByTime():List<Note> = noteDao.getNotesSortedByTime()
+    override fun getNotesSortedByTime():List<NoteWithNoteImages> = noteDao.getNotesSortedByTime()
 
     override fun addNote(note:Note):Long{
         return noteDao.addNote(note)
@@ -35,6 +30,13 @@ object LocalRepositoryImpl : LocalRepository {
     override fun updateNote(note:Note){
         noteDao.updateNote(note)
     }
+
+    override fun addNoteImages(noteImage: NoteImage){
+        noteImagesDao.addNoteImage(noteImage)
+    }
+
+    override fun getNoteImages(id: Int): List<NoteImage> =
+        noteImagesDao.getNoteImages(id)
 
     // TodoList Part
     override fun getTodoLists():List<TodoListWithTasks> = todoListDao.getTodoListWithTasks()

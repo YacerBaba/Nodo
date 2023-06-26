@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     CoroutineScope(Dispatchers.IO).launch{
                         for (note in selectedNotes) {
-                            LocalRepositoryImpl.deleteNote(note)
+                            LocalRepositoryImpl.deleteNote(note.note)
                         }
                     }.join()
                     currentFragment.notesAdapter.notesList.removeAll(selectedNotes)
@@ -72,13 +72,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         toolbar_back.setOnClickListener {
-            val currentFragment = fragmentAdapter.getFragmentByPosition(appViewPager.currentItem)
-            if(currentFragment is NotesFragment){
-                currentFragment.notesAdapter.isSelectionModeEnable = false
-                currentFragment.notesAdapter.notifyDataSetChanged()
-            }else{
-                (currentFragment as TodoFragment).adapter.isSelectModeEnabled = false
-                currentFragment.adapter.notifyDataSetChanged()
+            try {
+                val currentFragment = fragmentAdapter.getFragmentByPosition(appViewPager.currentItem)
+                if(currentFragment is NotesFragment){
+                    currentFragment.notesAdapter.isSelectionModeEnable = false
+                    currentFragment.notesAdapter.notifyDataSetChanged()
+                }else{
+                    (currentFragment as TodoFragment).adapter.isSelectModeEnabled = false
+                    currentFragment.adapter.notifyDataSetChanged()
+                }
+            }catch (_:java.lang.Exception){
+
             }
             toolbarDeleteLayout.visibility = View.GONE
             tabLayout.visibility = View.VISIBLE

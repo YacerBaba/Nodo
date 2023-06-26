@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.toolbar_delete.view.*
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.app.MainActivity
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.data.models.NoteWithNoteImages
 import owner.yacer.nodoproject.ui.activities.PreviewNoteActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,8 +38,8 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
     //private val differ = AsyncListDiffer(this, differCallBack)
 
 
-    var notesList: MutableList<Note> = mutableListOf()
-    private var selectedNotes = mutableListOf<Note>()
+    var notesList: MutableList<NoteWithNoteImages> = mutableListOf()
+    private var selectedNotes = mutableListOf<NoteWithNoteImages>()
     var isSelectionModeEnable = false
     private var activity = (context as MainActivity)
 
@@ -59,8 +60,8 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
     }
 
     override fun onBindViewHolder(holder: NoteAdapter.NoteViewHolder, position: Int) {
-        holder.title.text = notesList[position].title
-        holder.body.text = notesList[position].body
+        holder.title.text = notesList[position].note.title
+        holder.body.text = notesList[position].note.body
         if (isSelectionModeEnable) {
             holder.selectCheckBox.visibility = View.VISIBLE
             activity.appViewPager.isUserInputEnabled = false
@@ -72,14 +73,14 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
 
 
         val sdf = SimpleDateFormat("EEE ,dd MMM yyyy hh:mm", Locale.getDefault())
-        val currentDate = sdf.format(Date(notesList[position].time))
+        val currentDate = sdf.format(Date(notesList[position].note.time))
         holder.time.text = currentDate
         holder.itemView.setOnClickListener {
             Intent(context, PreviewNoteActivity::class.java).also {
-                it.putExtra("noteId", notesList[position].noteId)
-                it.putExtra("noteTitle", notesList[position].title)
-                it.putExtra("noteBody", notesList[position].body)
-                it.putExtra("noteTime", notesList[position].time)
+                it.putExtra("noteId", notesList[position].note.noteId)
+                it.putExtra("noteTitle", notesList[position].note.title)
+                it.putExtra("noteBody", notesList[position].note.body)
+                it.putExtra("noteTime", notesList[position].note.time)
                 context.startActivity(it)
                 (context as Activity).overridePendingTransition(
                     R.anim.slide_in_right, R.anim.slide_out_left
@@ -146,6 +147,6 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
 
     override fun getItemCount(): Int = notesList.size
 
-    fun getSelectedNotes(): MutableList<Note> = selectedNotes
+    fun getSelectedNotes(): MutableList<NoteWithNoteImages> = selectedNotes
 
 }

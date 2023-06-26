@@ -8,8 +8,7 @@ data class Note(
     val title: String,
     val body: String,
     val time: Long,
-    val img :ByteArray?=null,
-    val bgcolor:String? = null,
+    val bgColor:String? = null,
     @PrimaryKey(autoGenerate = true)
     val noteId: Int = 0
 )

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_preview_note.*
 import kotlinx.android.synthetic.main.pick_color_layout.*
@@ -15,6 +16,7 @@ import kotlinx.coroutines.withContext
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.models.Note
 import owner.yacer.nodoproject.domain.di.DaggerMyComponent
+import owner.yacer.nodoproject.ui.adapters.NoteImagesAdapter
 import owner.yacer.nodoproject.ui.viewmodels.PreviewViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,18 +25,25 @@ class PreviewNoteActivity : AppCompatActivity() {
     lateinit var note: Note
     lateinit var previewViewModel: PreviewViewModel
     lateinit var bottomSheetBehavior:BottomSheetBehavior<LinearLayout>
-    var requireFocus = 0
+    private lateinit var noteImagesAdapter: NoteImagesAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preview_note)
         val component = DaggerMyComponent.create()
         previewViewModel = component.getPreviewViewModel()
+
+        noteImagesAdapter = NoteImagesAdapter(this)
+        previewNote_rv_noteImages.adapter = noteImagesAdapter
+        previewNote_rv_noteImages.layoutManager = LinearLayoutManager(this)
+
         getDataFromIntent()
         setNoteToViews()
         initBottomColors()
+
         previewNote_btn_back.setOnClickListener {
             finish()
         }
+
         previewNote_btn_changeColor.setOnClickListener {
             if(bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED){
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -42,9 +51,11 @@ class PreviewNoteActivity : AppCompatActivity() {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
+
         previewNote_btn_export.setOnClickListener {
             startActivity(createShareIntent())
         }
+
         previewNote_btn_save.setOnClickListener {
             val title = previewNote_et_noteTitle.text.toString()
             val body = previewNote_et_noteBody.text.toString()
@@ -66,6 +77,20 @@ class PreviewNoteActivity : AppCompatActivity() {
         val body = intent.getStringExtra("noteBody")
         val time = intent.getLongExtra("noteTime", 0)
         note = Note(title!!, body!!, time, noteId = id)
+
+        // get note images
+        lifecycleScope.launch(Dispatchers.IO) {
+            val listOfNoteImages = previewViewModel.getNoteImages(id)
+            val listOfImages = LinkedList<String>()
+            listOfNoteImages.forEach { noteImage ->
+                listOfImages.add(noteImage.imgUrl)
+            }
+            withContext(Dispatchers.Main){
+                noteImagesAdapter.listOfImages = listOfImages
+                noteImagesAdapter.notifyDataSetChanged()
+            }
+        }
+
     }
 
     private fun setNoteToViews() {
