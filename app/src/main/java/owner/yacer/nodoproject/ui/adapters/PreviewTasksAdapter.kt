@@ -66,10 +66,11 @@ class PreviewTasksAdapter(
             }
         }
 
-        holder.taskEditText.setOnKeyListener { v, keyCode, event ->
+        holder.taskEditText.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
 
-                if (holder.taskEditText.text.toString().isEmpty() && this.itemCount > 1) {
+                if ((holder.taskEditText.text.toString().isEmpty() ||
+                            holder.taskEditText.text.toString().length == 1) && this.itemCount > 1) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.deleteTask(currentTask)
                         viewModel.getTodoListsWithTask()

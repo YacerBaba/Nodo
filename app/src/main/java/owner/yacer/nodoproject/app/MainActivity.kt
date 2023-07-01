@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,31 +14,40 @@ import kotlinx.android.synthetic.main.toolbar_delete.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.data.repository.LocalRepositoryImpl
+import owner.yacer.nodoproject.domain.di.DaggerMyComponent
 import owner.yacer.nodoproject.ui.adapters.FragmentAdapter
 import owner.yacer.nodoproject.ui.fragments.NotesFragment
 import owner.yacer.nodoproject.ui.fragments.TodoFragment
+import owner.yacer.nodoproject.ui.viewmodels.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // initialize the repository with context
-        LocalRepositoryImpl.initDatabase(this)
+
+        mainViewModel = DaggerMyComponent.create().getMainViewModel()
+        mainViewModel.initDatabase(this)
+
         val fragmentAdapter = FragmentAdapter(supportFragmentManager, lifecycle)
         appViewPager.adapter = fragmentAdapter
         setTabsLogic()
+
         toolbar_delete.setOnClickListener {
             val currentFragment = fragmentAdapter.getFragmentByPosition(appViewPager.currentItem)
             if (currentFragment is NotesFragment) {
                 val selectedNotes = currentFragment.notesAdapter.getSelectedNotes()
                 lifecycleScope.launch {
-                    CoroutineScope(Dispatchers.IO).launch{
+                    CoroutineScope(Dispatchers.IO).launch {
+
                         for (note in selectedNotes) {
-                            LocalRepositoryImpl.deleteNote(note.note)
+                            mainViewModel.deleteNote(note.note)
+                            for (noteImg in note.listOfImgs){
+                                mainViewModel.deleteNoteImage(noteImg)
+                            }
                         }
                     }.join()
                     currentFragment.notesAdapter.notesList.removeAll(selectedNotes)
@@ -48,17 +56,18 @@ class MainActivity : AppCompatActivity() {
                     toolbarDeleteLayout.visibility = View.GONE
                     tabLayout.visibility = View.VISIBLE
                 }
-            } else {
-                lifecycleScope.launch{
+            } else if (currentFragment is TodoFragment) {
+                lifecycleScope.launch {
                     val selectedTodoLists =
-                        (currentFragment as TodoFragment).adapter.getSelectedTodoLists()
+                        currentFragment.adapter.getSelectedTodoLists()
                     CoroutineScope(Dispatchers.IO).launch {
-                        for(todoList in selectedTodoLists){
+                        for (todoList in selectedTodoLists) {
                             // delete tasks of todoList
-                            for(task in todoList.tasks){
-                                LocalRepositoryImpl.deleteTask(task)
+                            Log.e("msgSelectedTodoLists",selectedTodoLists.toString())
+                            for (task in todoList.tasks) {
+                                mainViewModel.deleteTask(task)
                             }
-                            LocalRepositoryImpl.deleteTodoList(todoList.todoList)
+                            mainViewModel.deleteTodoList(todoList.todoList)
                         }
                     }.join()
                     currentFragment.adapter.todoLists.removeAll(selectedTodoLists)
@@ -73,19 +82,20 @@ class MainActivity : AppCompatActivity() {
 
         toolbar_back.setOnClickListener {
             try {
-                val currentFragment = fragmentAdapter.getFragmentByPosition(appViewPager.currentItem)
-                if(currentFragment is NotesFragment){
+                val currentFragment =
+                    fragmentAdapter.getFragmentByPosition(appViewPager.currentItem)
+                if (currentFragment is NotesFragment) {
                     currentFragment.notesAdapter.isSelectionModeEnable = false
                     currentFragment.notesAdapter.notifyDataSetChanged()
-                }else{
-                    (currentFragment as TodoFragment).adapter.isSelectModeEnabled = false
+                } else if (currentFragment is TodoFragment) {
+                    (currentFragment).adapter.isSelectModeEnabled = false
                     currentFragment.adapter.notifyDataSetChanged()
                 }
-            }catch (_:java.lang.Exception){
+                toolbarDeleteLayout.visibility = View.GONE
+                tabLayout.visibility = View.VISIBLE
+            } catch (_: java.lang.Exception) {
 
             }
-            toolbarDeleteLayout.visibility = View.GONE
-            tabLayout.visibility = View.VISIBLE
         }
 
     }
@@ -100,14 +110,14 @@ class MainActivity : AppCompatActivity() {
             val iconColored = customView.tab_iconColored
             when (position) {
                 0 -> {
-                    iconBlack.setImageResource(R.drawable.note)
-                    iconColored.setImageResource(R.drawable.noteyellow)
+                    iconBlack.setImageResource(R.drawable.note_empty)
+                    iconColored.setImageResource(R.drawable.note_filled)
                     iconBlack.visibility = View.GONE
                     iconColored.visibility = View.VISIBLE
                 }
                 1 -> {
-                    iconBlack.setImageResource(R.drawable.ic_todo)
-                    iconColored.setImageResource(R.drawable.ic_todoyellow)
+                    iconBlack.setImageResource(R.drawable.checkbox_empty)
+                    iconColored.setImageResource(R.drawable.checkbox_filled)
                     iconBlack.visibility = View.VISIBLE
                     iconColored.visibility = View.GONE
                 }

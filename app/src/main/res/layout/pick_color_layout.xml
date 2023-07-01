@@ -4,109 +4,155 @@
     android:layout_height="wrap_content"
     android:id="@+id/layout_bottomsheetColors"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/pick_color_bg"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    app:behavior_peekHeight= "0dp"
+    app:behavior_peekHeight="0dp"
+    android:background="@drawable/pick_color_bg"
     >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center_vertical"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="10dp"
+        android:orientation="vertical"
         >
-        <FrameLayout
-            android:id="@+id/fl_whiteRadio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <View
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/grey_radio"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Theme"
+                android:textSize="@dimen/_13sdp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/sfprodisplay_medium"
+                android:layout_alignParentStart="true"
                 />
             <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:src="@drawable/ic_done"
-                android:padding="@dimen/_10sdp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/minus"
+                app:tint="#636363"
                 />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/fl_yellowRadio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/yellow_radio"
-                />
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:padding="@dimen/_10sdp"
-                />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/fl_greenRadio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/green_radio"
-                />
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:padding="@dimen/_10sdp"
-                />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/fl_redRadio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/red_radio"
-                />
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:padding="@dimen/_10sdp"
-                />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/fl_blackRadio"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@drawable/black_radio"
-                />
-            <ImageView
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:padding="@dimen/_10sdp"
-                />
-        </FrameLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pick Color"
-            android:textSize="@dimen/_13sdp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/sfprodisplay_medium"
-            />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="10dp"
+            >
+            <FrameLayout
+                android:id="@+id/fl_white"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/banned"
+                    />
+                <ImageView
+                    android:id="@+id/fl_white_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_10sdp"
+                    />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_blue"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/blue_round"
+                    />
+                <ImageView
+                    android:id="@+id/fl_blue_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_9sdp"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_green"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/green_round"
+                    />
+                <ImageView
+                    android:id="@+id/fl_green_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_9sdp"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_yellow"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/yellow_round"
+                    />
+                <ImageView
+                    android:id="@+id/fl_yellow_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_9sdp"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_violet"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/violet_round"
+                    />
+
+                <ImageView
+                    android:id="@+id/fl_violet_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_9sdp" />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_brown"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@drawable/brown_round"
+                    />
+                <ImageView
+                    android:id="@+id/fl_brown_iv"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_9sdp"
+                    />
+            </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

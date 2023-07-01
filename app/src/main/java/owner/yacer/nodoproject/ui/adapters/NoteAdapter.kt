@@ -3,6 +3,7 @@ package owner.yacer.nodoproject.ui.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,10 +63,16 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
     override fun onBindViewHolder(holder: NoteAdapter.NoteViewHolder, position: Int) {
         holder.title.text = notesList[position].note.title
         holder.body.text = notesList[position].note.body
+        val bgColor = notesList[position].note.bgColor
+        if(bgColor != null)
+            holder.itemView.setBackgroundColor(bgColor)
+        else
+            holder.itemView.setBackgroundColor(Color.WHITE)
         if (isSelectionModeEnable) {
             holder.selectCheckBox.visibility = View.VISIBLE
             activity.appViewPager.isUserInputEnabled = false
         } else {
+            holder.selectCheckBox.isChecked = false
             holder.selectCheckBox.visibility = View.GONE
             activity.appViewPager.isUserInputEnabled = true
         }
@@ -81,6 +88,7 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
                 it.putExtra("noteTitle", notesList[position].note.title)
                 it.putExtra("noteBody", notesList[position].note.body)
                 it.putExtra("noteTime", notesList[position].note.time)
+                it.putExtra("bgColor",notesList[position].note.bgColor)
                 context.startActivity(it)
                 (context as Activity).overridePendingTransition(
                     R.anim.slide_in_right, R.anim.slide_out_left

@@ -68,6 +68,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
             holder.selectCheckBox.visibility = View.VISIBLE
             activity.appViewPager.isUserInputEnabled = false
         } else{
+            holder.selectCheckBox.isChecked = false
             holder.selectCheckBox.visibility = View.GONE
             activity.appViewPager.isUserInputEnabled = true
         }
@@ -112,7 +113,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
                     activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text = "$number item selected"
                     selectedTodoLists.add(todoLists[position])
                 } else {
-                    selectedTodoLists.removeAt(position)
+                    selectedTodoLists.remove(todoLists[position])
                     var number =
                         activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text.split(
                             " "
@@ -141,6 +142,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
             if (!isSelectModeEnabled) {
                 val activity = (context as MainActivity)
                 activity.toolbarDeleteLayout.visibility = View.VISIBLE
+                activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text = "1 item selected"
                 activity.tabLayout.visibility = View.GONE
                 isSelectModeEnabled = true
                 holder.selectCheckBox.isChecked = true
@@ -157,7 +159,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
                     number++
                     activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text = "$number item selected"
                 } else {
-                    selectedTodoLists.removeAt(position)
+                    selectedTodoLists.remove(todoLists[position])
                     var number =
                         activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text.split(
                             " "
@@ -182,7 +184,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
                     selectedTodoLists.add(todoLists[position])
                 }
                 else {
-                    selectedTodoLists.removeAt(position)
+                    selectedTodoLists.remove(todoLists[position])
                     var number =
                         activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text.split(
                             " "
@@ -217,7 +219,7 @@ class TodoListAdapter(var context: Context, private val viewModel: TodoFragmentV
         private val viewModel: TodoFragmentViewModel
     ) :
         RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
-        inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        inner class TaskViewHolder(view: View) : ViewHolder(view) {
             var taskBody = view.todo_body
             var taskChecked = view.todo_check
         }

@@ -8,7 +8,7 @@ data class Note(
     val title: String,
     val body: String,
     val time: Long,
-    val bgColor:String? = null,
+    val bgColor:Int? = null,
     @PrimaryKey(autoGenerate = true)
-    val noteId: Int = 0
+    val noteId: Long = 0
 )

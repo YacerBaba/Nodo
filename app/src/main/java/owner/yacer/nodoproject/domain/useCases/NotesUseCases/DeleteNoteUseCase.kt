@@ -1,6 +1,7 @@
 package owner.yacer.nodoproject.domain.useCases.NotesUseCases
 
 import owner.yacer.nodoproject.data.models.Note
+import owner.yacer.nodoproject.data.models.NoteWithNoteImages
 import owner.yacer.nodoproject.domain.interfaces.LocalRepository
 import javax.inject.Inject
 

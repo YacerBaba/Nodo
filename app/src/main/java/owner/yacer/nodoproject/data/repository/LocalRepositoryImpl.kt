@@ -31,13 +31,16 @@ object LocalRepositoryImpl : LocalRepository {
         noteDao.updateNote(note)
     }
 
-    override fun addNoteImages(noteImage: NoteImage){
+    override fun addNoteImage(noteImage: NoteImage){
         noteImagesDao.addNoteImage(noteImage)
     }
 
-    override fun getNoteImages(id: Int): List<NoteImage> =
+    override fun getNoteImages(id: Long): List<NoteImage> =
         noteImagesDao.getNoteImages(id)
 
+    override fun deleteNoteImage(noteImage: NoteImage) {
+        noteImagesDao.deleteNoteImage(noteImage)
+    }
     // TodoList Part
     override fun getTodoLists():List<TodoListWithTasks> = todoListDao.getTodoListWithTasks()
     override fun addTodoList(todoList: TodoList):Long{

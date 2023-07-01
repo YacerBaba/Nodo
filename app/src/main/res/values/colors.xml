@@ -8,7 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#1687EF</color>
+    <color name="light_blue">#ddf0f7</color>
     <color name="yellow">#ffea00</color>
+    <color name="light_yellow">#fbfbbe</color>
+    <color name="light_green">#e5fbd4</color>
+    <color name="light_violet">#ffe9f6</color>
+    <color name="light_brown">#fff4e0</color>
     <color name="grey">#EDEDE9</color>
     <color name="blue_r">#0256fd</color>
     <color name="red_r">#fd0202</color>

@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import owner.yacer.nodoproject.data.models.Note
 import owner.yacer.nodoproject.data.models.NoteWithNoteImages

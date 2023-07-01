@@ -10,8 +10,9 @@ interface LocalRepository {
     fun addNote(note: Note):Long
     fun deleteNote(note: Note)
     fun updateNote(note: Note)
-    fun addNoteImages(noteImage: NoteImage)
-    fun getNoteImages(id:Int):List<NoteImage>
+    fun addNoteImage(noteImage: NoteImage)
+    fun getNoteImages(id:Long):List<NoteImage>
+    fun deleteNoteImage(noteImage: NoteImage)
     // TodoList Part
     fun getTodoLists():List<TodoListWithTasks>
     fun addTodoList(todoList: TodoList):Long

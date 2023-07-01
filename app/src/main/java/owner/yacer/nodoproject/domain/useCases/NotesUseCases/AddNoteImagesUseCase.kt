@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class AddNoteImagesUseCase @Inject constructor(val localRepository: LocalRepository) {
     fun execute(noteImage: NoteImage){
-        localRepository.addNoteImages(noteImage = noteImage)
+        localRepository.addNoteImage(noteImage = noteImage)
     }
 }

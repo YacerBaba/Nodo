@@ -4,6 +4,10 @@ import owner.yacer.nodoproject.data.models.NoteImage
 import owner.yacer.nodoproject.domain.interfaces.LocalRepository
 import javax.inject.Inject
 
-class GetNoteImagesUseCase @Inject constructor(val localRepository: LocalRepository) {
-    fun execute(id:Long):List<NoteImage> = localRepository.getNoteImages(id)
+class DeleteNoteImageUseCase @Inject constructor(
+    private val localRepository: LocalRepository) {
+
+    fun execute(noteImage: NoteImage){
+        localRepository.deleteNoteImage(noteImage)
+    }
 }

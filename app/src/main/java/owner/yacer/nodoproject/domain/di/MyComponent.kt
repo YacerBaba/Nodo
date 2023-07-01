@@ -1,10 +1,7 @@
 package owner.yacer.nodoproject.domain.di
 
 import dagger.Component
-import owner.yacer.nodoproject.ui.viewmodels.CreateNewNoteViewModel
-import owner.yacer.nodoproject.ui.viewmodels.NoteFragmentViewModel
-import owner.yacer.nodoproject.ui.viewmodels.PreviewViewModel
-import owner.yacer.nodoproject.ui.viewmodels.TodoFragmentViewModel
+import owner.yacer.nodoproject.ui.viewmodels.*
 
 @Component(modules = [UseCasesModule::class])
 interface MyComponent {
@@ -12,4 +9,5 @@ interface MyComponent {
     fun getNoteViewModel():NoteFragmentViewModel
     fun getPreviewViewModel():PreviewViewModel
     fun getTodoViewModel():TodoFragmentViewModel
+    fun getMainViewModel():MainViewModel
 }
