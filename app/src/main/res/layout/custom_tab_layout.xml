@@ -8,15 +8,15 @@
     >
     <ImageView
         android:id="@+id/tab_iconBlack"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/note_empty"
         android:layout_marginStart="15dp"
         />
     <ImageView
         android:id="@+id/tab_iconColored"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/note_filled"
         android:layout_marginStart="15dp"
         android:visibility="gone"

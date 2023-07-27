@@ -16,28 +16,12 @@ import owner.yacer.nodoproject.R
 import owner.yacer.nodoproject.app.MainActivity
 import owner.yacer.nodoproject.data.models.Note
 import owner.yacer.nodoproject.data.models.NoteWithNoteImages
+import owner.yacer.nodoproject.data.repository.LocalRepositoryImpl
 import owner.yacer.nodoproject.ui.activities.PreviewNoteActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-    /*private val differCallBack = object : DiffUtil.ItemCallback<Note>() {
-        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.noteId == newItem.noteId
-        }
-
-        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            Log.e("msgItem",("$oldItem $newItem"))
-            return oldItem.noteId == newItem.noteId &&
-                    oldItem.title == newItem.title &&
-                    oldItem.body == newItem.body &&
-                    oldItem.time == newItem.time
-        }
-    }*/
-    // AsyncListDiffer is an object uses DiffUtil.ItemCallback instance to calculate the diff between
-    // two list and update the adapter using submitList(list) method without unnecessary notifyDataSetChange calls
-    //private val differ = AsyncListDiffer(this, differCallBack)
-
 
     var notesList: MutableList<NoteWithNoteImages> = mutableListOf()
     private var selectedNotes = mutableListOf<NoteWithNoteImages>()
@@ -117,7 +101,7 @@ class NoteAdapter(val context: Context) : RecyclerView.Adapter<NoteAdapter.NoteV
                     number++
                     activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text = "$number item selected"
                 } else {
-                    selectedNotes.removeAt(position)
+                    selectedNotes.remove(notesList[position])
                     var number =
                         activity.toolbarDeleteLayout.toolbarDelete_itemSelected.text.split(
                             " "

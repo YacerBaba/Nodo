@@ -3,7 +3,7 @@ package owner.yacer.nodoproject.domain.di
 import dagger.Component
 import owner.yacer.nodoproject.ui.viewmodels.*
 
-@Component(modules = [UseCasesModule::class])
+@Component(modules = [RepositoryModule::class])
 interface MyComponent {
     fun getCreateNoteViewModel():CreateNewNoteViewModel
     fun getNoteViewModel():NoteFragmentViewModel

@@ -5,6 +5,7 @@ import androidx.room.Room
 import owner.yacer.nodoproject.data.local.*
 import owner.yacer.nodoproject.data.models.*
 import owner.yacer.nodoproject.domain.interfaces.LocalRepository
+import javax.inject.Inject
 
 object LocalRepositoryImpl : LocalRepository {
     lateinit var db:Database
@@ -55,7 +56,6 @@ object LocalRepositoryImpl : LocalRepository {
         todoListDao.deleteTodoList(todoList)
     }
 
-
     override fun addTasks(tasks:List<Task>){
         taskDao.addTasks(tasks)
     }
@@ -68,7 +68,5 @@ object LocalRepositoryImpl : LocalRepository {
     override fun updateTask(task: Task){
         taskDao.updateTask(task)
     }
-
-
 
 }

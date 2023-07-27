@@ -42,14 +42,16 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
         todoViewModel = component.getTodoViewModel()
         todoViewModel.initDatabase(requireContext())
         setupRecyclerView()
-        lifecycleScope.async {
+        lifecycleScope.launch(Dispatchers.IO) {
             todoViewModel.getTodoListsWithTask()
-            todoViewModel.mutableTodoList.observe(this@TodoFragment) {
-                listOfTodoList = it
-                adapter.todoLists = listOfTodoList.toMutableList()
-                Log.e("msg","observer called !!!!")
-                Log.e("msg",it.toString())
-                adapter.notifyDataSetChanged()
+            withContext(Dispatchers.Main){
+                todoViewModel.mutableTodoList.observe(this@TodoFragment) {
+                    listOfTodoList = it
+                    adapter.todoLists = listOfTodoList.toMutableList()
+                    Log.e("msg","observer called !!!!")
+                    Log.e("msg",it.toString())
+                    adapter.notifyDataSetChanged()
+                }
             }
         }
 
