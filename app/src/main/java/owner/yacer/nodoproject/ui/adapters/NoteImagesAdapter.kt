@@ -28,6 +28,6 @@ class NoteImagesAdapter (val context: Context) : RecyclerView.Adapter<NoteImages
     override fun getItemCount(): Int = listOfImages.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.noteImageView.setImageURI(Uri.parse(listOfImages[position]))
+        Glide.with(holder.itemView).load(listOfImages[position]).into(holder.noteImageView)
     }
 }
